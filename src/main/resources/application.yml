@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: order
+  jpa:
+    generate-ddl: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/catalogs
+    username: admin
+    password: secretpassword123
+    driver-class-name: org.postgresql.Driver
