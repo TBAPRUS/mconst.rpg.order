@@ -5,7 +5,7 @@ services:
   postgres:
     image: postgres:16.1
     environment:
-      POSTGRES_DB: "catalogs"
+      POSTGRES_DB: "db"
       POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "secretpassword123"
     volumes:

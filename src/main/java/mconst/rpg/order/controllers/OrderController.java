@@ -44,6 +44,6 @@ public class OrderController {
 
     @PostMapping()
     public OrderEntity create(@RequestBody OrderDto order) {
-        return orderService.createWithMaxCountCheck(orderMapper.map(order), 100L);
+        return orderService.create(orderMapper.map(order));
     }
 }
