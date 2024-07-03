@@ -10,16 +10,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 public class OrderService {
     private OrderRepository orderRepository;
     private CatalogService catalogService;
+    private AccountService accountService;
+    private UuidGeneratorService uuidGeneratorService;
 
-    public OrderService(OrderRepository orderRepository, CatalogService catalogService) {
+    public OrderService(
+            OrderRepository orderRepository,
+            CatalogService catalogService,
+            AccountService accountService,
+            UuidGeneratorService uuidGeneratorService
+    ) {
         this.orderRepository = orderRepository;
         this.catalogService = catalogService;
+        this.accountService = accountService;
+        this.uuidGeneratorService = uuidGeneratorService;
     }
 
     public Page<OrderEntity> get(Pageable pagination) {
@@ -37,6 +44,10 @@ public class OrderService {
             exceptionBody.addError("not available", "product");
             throw new ConflictException(exceptionBody);
         }
+
+        Integer cost = 1000;
+        String token = this.uuidGeneratorService.generate();
+        this.accountService.spendMoney(Math.toIntExact(order.getUserId()), cost, token);
 
         return createdOrder;
     }
