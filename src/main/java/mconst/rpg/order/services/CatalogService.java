@@ -1,6 +1,5 @@
 package mconst.rpg.order.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
@@ -32,10 +30,10 @@ public class CatalogService {
         return String.format("%s://%s:%s%s", scheme, host, port, endpoint);
     }
 
-    public Boolean checkProductAvailability(Long id, Long count) {
+    public Boolean checkProductAvailability(Long id, Long count, Long pricePerOne) {
         var restTemplate = new RestTemplate();
         var url = getUrl(String.format("/products/%s/check-product-availability", id));
-        var request = new HttpEntity<>(new CatalogCheckProductAvailability(count));
+        var request = new HttpEntity<>(new CatalogCheckProductAvailability(count, pricePerOne));
         try {
             var response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
 

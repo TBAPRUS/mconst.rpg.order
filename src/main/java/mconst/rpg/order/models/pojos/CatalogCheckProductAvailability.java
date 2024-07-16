@@ -11,4 +11,5 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class CatalogCheckProductAvailability implements Serializable {
     private Long count;
+    private Long pricePerOne;
 }
